@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Account Detector</title>
+
+    <!-- Corrected CSS Link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+
+    <script>
+        async function checkAccount() {
+            let userData = {
+                name: document.getElementById("name").value,
+                statuses_count: parseFloat(document.getElementById("statuses_count").value),
+                followers_count: parseFloat(document.getElementById("followers_count").value),
+                friends_count: parseFloat(document.getElementById("friends_count").value),
+                favourites_count: parseFloat(document.getElementById("favourites_count").value),
+                listed_count: parseFloat(document.getElementById("listed_count").value),
+                created_at: document.getElementById("created_at").value,
+                profile_image_url: document.getElementById("profile_image_url").value.toLowerCase() === "yes" ? "exists" : null
+            };
+
+            let response = await fetch("/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData)
+            });
+
+            let result = await response.json();
+            document.getElementById("result").innerText = "Account is likely: " + result.result;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="brand-logo"></div>
+        <div class="brand-title">Fake Account Detector</div>
+
+        <div class="inputs">
+            <label>Name:</label> 
+            <input type="text" id="name" placeholder="Enter Name">
+
+            <label>Statuses Count:</label> 
+            <input type="number" id="statuses_count" placeholder="Enter Statuses Count">
+
+            <label>Followers Count:</label> 
+            <input type="number" id="followers_count" placeholder="Enter Followers Count">
+
+            <label>Friends Count:</label> 
+            <input type="number" id="friends_count" placeholder="Enter Friends Count">
+
+            <label>Favourites Count:</label> 
+            <input type="number" id="favourites_count" placeholder="Enter Favourites Count">
+
+            <label>Listed Count:</label> 
+            <input type="number" id="listed_count" placeholder="Enter Listed Count">
+
+            <label>Created At:</label> 
+            <input type="date" id="created_at">
+
+            <label>Profile Image? (yes/no):</label> 
+            <input type="text" id="profile_image_url" placeholder="yes or no">
+
+            <button onclick="checkAccount()">Check Account</button>
+        </div>
+
+        <p id="result"></p>
+    </div>
+</body>
+</html>
