@@ -169,3 +169,11 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+instance/
+.env
+config.py
+venv/
+.idea/  # If using PyCharm
+*.log
+
