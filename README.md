@@ -37,7 +37,9 @@ cd Social-Media-Integrity-Machine-Learning
 2️⃣ Create and activate a virtual environment:
 ```bash
 python -m venv venv
-source venv/bin/activate  # On macOS/Linux
+# If you encounter errors related to an existing or broken venv folder, remove it:
+# (For PowerShell on Windows)
+Remove-Item -Recurse -Force .\venv
 venv\Scripts\activate    # On Windows
 ```
 
